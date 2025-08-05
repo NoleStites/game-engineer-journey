@@ -10,7 +10,7 @@ I am reading this book to learn the mathematical concepts behind 2D and 3D objec
 # Table of Contents
 - [Introduction](#introduction)
 - [Chapter 1](#chapter-1-cartesian-coordinate-systems)
-<!-- - [Chapter 2](#chapter-2-vectors) -->
+- [Chapter 2](#chapter-2-vectors)
 <!-- - [Chapter 3](#chapter-3-multiple-coordinate-spaces) -->
 <!-- - [Chapter 4](#chapter-4-introduction-to-matrices) -->
 <!-- - [Chapter 5](#chapter-5-matrices-and-linear-transformations) -->
@@ -84,7 +84,93 @@ is in 2D.
     - `1 + cot^2(θ) = csc^2(θ)`
 - Also refer to the *sum and difference identities*, *double angle identities*, and the *law of sines* and *law of cosines*
 
-<!-- # [**Chapter 2:** Vectors](https://gamemath.com/book/vectors.html) -->
+# [**Chapter 2:** Vectors](https://gamemath.com/book/vectors.html)
+## **2.1** - Mathematical Definition of Vector
+- Mathematically, vectors are a list of numbers
+- Scalars are ordinary numbers
+    - Ex: "velocity" and "displacement" are vector quantities while "speed" and "distance" are scalar quantities
+- A vector's dimension is how many numbers it contains (the length)
+    - A 1D vector has a single value (a scalar can be considered 1D), a 2D has two values, etc.
+- Vector syntax: [1,2,3] (this is a *row vector*) (*column vectors* are written vertically)
+- When refering to individual values within a vector, use subscript notation
+    - Ex: `**a** = [3,4,5,6]`; 
+    - `a_1 = a_x = 3`;
+    - `a_2 = a_y = 4`;
+    - `a_3 = a_z = 5`;
+    - `a_4 = a_w = 6`;
+- Common syntax for scalar, vector, and matrix variables:
+    - Scalar quantities use lowercase in italics: *a*, *b*, *x*, *y*, *θ*
+    - Vector quantities use lowercase in boldface: **a**, **b**, **u**, **v**
+    - Matrix quantities use uppercase in boldface: **A**, **B**, **M**, **R**
+
+## **2.2** - Geometric Definition of Vector
+- Vectors are directed line segments with a *magnitude* and *direction*
+    - *Magnitude*: length of the vector (nonnegative)
+    - *Direction*: which way the vector is pointing in space
+- The *head* of a vector refers to the end with the arrowhead on it and the *tail* refers to the opposite end
+- Vectors do not have positions, only magnitudes and directions. Consider the following examples:
+    - *Displacement*: "Take three steps forward" does not require a position
+    - *Velocity*: "I am traveling northeast at 50 mph". It has a magnitude (50 mph) and direction (northeast), but no position
+- Comparison of scalar values with their similar, but different, vector counterparts:
+    - *Speed* (scalar) is the magnitude of the vector *velocity*
+    - *Distance* (scalar) is the magnitude of the vector *displacement*
+- Vectors are relative, not absolute, due to the lack of position
+
+## **2.3** - Specifying Vectors with Cartesian Coordinates
+- You can assign values to vectors using Cartesian Coordinates, but they do not represent a position in space, but
+rather a displacement from the tail of the vector to the head of the vector.
+    - Two vectors with the same value (ex: `(1.5, 1)`), can be represented at different locations in a plane because vectors have no position, but can share the same displacement.
+    - Examples below
+![Examples of 2D vectors and their values](./3d-math-primer-note-assets/2d_labeled_vectors.png)
+- Polar coordinates can also be used to specify vectors (refer to Chapter 7 for details)
+- The 3D vector [1,-3,4] represents a single displacement
+    - 1 unit to the right, 3 units down, and 4 units forward
+    - The order in which the three sub-displacements take place does not matter; the total displacement will be the same
+- The zero vector has zeroes in all positions. Ex: 3D zero vector is [0,0,0]
+    - It is the only vector in its dimension with zero magnitude and no direction
+    - Describes "no displacement"
+
+## **2.4** - Vectors versus Points
+- *Points* specify a position while *vectors* specify a displacement
+- Because vectors describe displacements, they can inherently describe relative positions
+- Any point can be represented as a vector from the origin: (x,y) => [x,y]
+
+## **2.5** - Negating a Vector
+- Every vector **v** has an additive inverse **-v** such that `**v** + (**-v**) = 0`
+    - Below are examples of vectors and their inverses
+![Examples of vectors and their inverses](./3d-math-primer-note-assets/negating_vectors_example.png)
+- To negate a vector of any dimension, simply distribute a negative sign to each element within the vector
+    - Ex: `-[a_1, a_2, a_3] = [-a_1, -a_2, -a_3]`
+    - Interpretation: negating a vector results in a vector of the same magnitude but in the opposite direction
+
+## **2.6** - Vector Multiplication by a Scalar
+- You can multiply (but not add) a scalar and a vector. Simply distribute the scalar into each value of the vector.
+    - Ex: `k[a_1, a_2, a_3] = [ka_1, ka_2, ka_3]`
+    - The result is a new vector parallel to the original, but possibly of different magnitude and opposite direction
+    - Interpretation: multiplying a scalar into a vector scales the length of that vector (refer to figure below)
+- You can also divide a vector by a scalar since it is the same as multiplying by the reciprocal
+- Below is an example of scalar multiplication
+![Scalar/vector multiplication examples](./3d-math-primer-note-assets/vector_times_scalar_examples_fig.png)
+- A scalar cannot be divided by a vector, nor can a vector be divided by another vector
+
+## **2.7** - Vector Addition and Subtraction
+- Vectors must be of the same dimension to be added or subtracted. The process is simple:
+    - Ex: `[a_1, a_2, a_3] + [b_1, b_2, b_3] = [a_1 + b_1, a_2 + b_2, a_3 + b_3]`
+    - Ex: `[a_1, a_2, a_3] - [b_1, b_2, b_3] = [a_1 - b_1, a_2 - b_2, a_3 - b_3]`
+- You can use the *triangle rule* to add multiple vectors by positioning the tail of one vector at the head of the previous and connecting the tail of the first vector with the head of the last.
+    - Consider the visual below
+![Triangle rule visual](./3d-math-primer-note-assets/triangle_rule.png)
+- When adding multiple vectors together, think of it like different forces being applied to an object (ex: wind is blowing you one way,
+your car is bringing you another way, while your seat is moving backward). 
+    - Below is a good visual for considering the result of applying many different forces to an object
+![Triangle rule with many vectors](./3d-math-primer-note-assets/triangle_rule_multiple_vectors.png)
+- Finding the displacement between two points *a* and *b* is as simple as considering the vector representation of the points
+and subtracting them: **b** - **a**
+![2D vector between points](./3d-math-primer-note-assets/2d_vector_between_points.png)
+
+## **2.8** - Vector Magnitude (Length)
+[to be continued]
+
 <!-- # [**Chapter 3:** Multiple Coordinate Spaces](https://gamemath.com/book/multiplespaces.html) -->
 <!-- # [**Chapter 4:** Introduction to Matrices](https://gamemath.com/book/matrixintro.html) -->
 <!-- # [**Chapter 5:** Matrices and Linear Transformations](https://gamemath.com/book/matrixtransforms.html) -->
