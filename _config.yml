@@ -22,10 +22,9 @@ title: Nole's Game Engineer Journey
 email: nole.stites@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
     A website to keep track of everything involved in my journey to become a Game Engineer at thatgamecompany. 
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://game-engineer-journey.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: jekyllrb
-github_username:  jekyll
+baseurl: "/game-engineer-journey" # the subpath of your site, e.g. /blog
+url: "https://nolestites.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+github_username:  NoleStites
 
 # Build settings
 theme: minima
