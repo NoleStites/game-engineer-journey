@@ -169,7 +169,56 @@ and subtracting them: **b** - **a**
 ![2D vector between points](./3d-math-primer-note-assets/2d_vector_between_points.png)
 
 ## **2.8** - Vector Magnitude (Length)
-[to be continued]
+- *Magnitude* = *length* or *norm* of vector
+- Since vectors are represented by a cartesian coordinate (ex: (3,4)), which does not represent either magnitude or displacement, 
+the maginutude must be computed
+- A magnitude is represented mathematically with double pipes: ||**v**|| (magnitude of **v**) (sometimes represented with one bar)
+- Computing the magnitude
+    - Take the square root of the sum of the square of each component in the vector
+    - (Pretty much the Pythagorean theorem)
+    - Below is the formula for the magnitude of an arbitrarily-sized vector
+![Magnitude formula for arbitrary vector](./3d-math-primer-note-assets/arbitray-magnitude-formula.png)
+    - Below is the formula for 2D and 3D vectors
+![Magnitude formula for 2D and 3D vectors](./3d-math-primer-note-assets/2D-and-3D-magnitude-formula.png)
+
+## **2.9** - Unit Vectors
+- A unit vector, or *normalized* vector, has a magnitude of 1
+- Useful when we dont care about magnitude, only direction (I want to know which way I am facing, but thats it)
+- **NOTE**: a *normal* vector is one that is perpendicular to a surface (usually still with unit length), so don't get confused
+- *Normalizing* a vector means to compute a new vector whos magnitude is 1 (unit length) but points in the same direction as the original
+    - Common case is to use the "hat" symbol to mark a variable as a normalized vector (ex: "v hat")
+    - To normalize a vector, divide the vector by its magnitude (shown below)
+![Normalizing vectors example](./3d-math-primer-note-assets/normalizing-vectors.png)
+- The zero vector cannot be normalized
+
+## **2.10** - Distance Formula
+- Refer to the image below for the distance formula for 2D and 3D vectors
+![Distance formulas](./3d-math-primer-note-assets/distance-formulas.png)
+
+## **2.11** - Vector Dot Product
+- The *dot product* is also known as the *inner product*
+- The dot product *must* be represented with the dot symbol between the vectors
+- The dot product of two vectors is the sum of the products of corresponding components
+    - It results in a *scalar* (refer to formula below)
+![Dot product formula](./3d-math-primer-note-assets/dot-product.png)
+- The dot product can be used to determine the angle between two vectors using the following formula:
+![Dot product angle](./3d-math-primer-note-assets/dot-product-angle.png)
+![Dot product graph](./3d-math-primer-note-assets/dot-product-graph.png)
+- The dot product can also measure the length of the projection of **b** onto **a**, multiplied by the length of **a**
+![Dot product projection](./3d-math-primer-note-assets/dot_product_project.png)
+
+## **2.12** - Vector Cross Product
+- A *cross product* can only be applied in 3D and yields a 3D vector
+- The cross product will always use the cross symbol (x)
+- The cross product yields a vector that is perpendicular to the original two vectors (shown below)
+![Cross product](./3d-math-primer-note-assets/cross_product.png)
+- The length of **a** x **b** is equal to the product of the magnitudes or **a** and **b** and the sine of the angle between them:
+    - `||a x b|| = ||a|| ||b|| sin(θ)`
+
+## **2.13** - Linear Algebra Identities
+- No need to memorize these
+![Linear algebra identities](./3d-math-primer-note-assets/linear_algebra_identities.png)
+
 
 <!-- # [**Chapter 3:** Multiple Coordinate Spaces](https://gamemath.com/book/multiplespaces.html) -->
 <!-- # [**Chapter 4:** Introduction to Matrices](https://gamemath.com/book/matrixintro.html) -->
