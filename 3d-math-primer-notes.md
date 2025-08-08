@@ -11,8 +11,8 @@ I am reading this book to learn the mathematical concepts behind 2D and 3D objec
 - [Introduction](#introduction)
 - [Chapter 1](#chapter-1-cartesian-coordinate-systems)
 - [Chapter 2](#chapter-2-vectors)
-<!-- - [Chapter 3](#chapter-3-multiple-coordinate-spaces) -->
-<!-- - [Chapter 4](#chapter-4-introduction-to-matrices) -->
+- [Chapter 3](#chapter-3-multiple-coordinate-spaces)
+- [Chapter 4](#chapter-4-introduction-to-matrices)
 <!-- - [Chapter 5](#chapter-5-matrices-and-linear-transformations) -->
 <!-- - [Chapter 6](#chapter-6-more-on-matrices) -->
 <!-- - [Chapter 7](#chapter-7-polar-coordinate-systems) -->
@@ -201,10 +201,10 @@ the maginutude must be computed
 - The dot product of two vectors is the sum of the products of corresponding components
     - It results in a *scalar* (refer to formula below)
 ![Dot product formula](./3d-math-primer-note-assets/dot-product.png)
-- The dot product can be used to determine the angle between two vectors using the following formula:
+- The dot product can be used to determine the angle between two vectors using the following formula:  
 ![Dot product angle](./3d-math-primer-note-assets/dot-product-angle.png)
 ![Dot product graph](./3d-math-primer-note-assets/dot-product-graph.png)
-- The dot product can also measure the length of the projection of **b** onto **a**, multiplied by the length of **a**
+- The dot product can also measure the length of the projection of **b** onto **a**, multiplied by the length of **a**   
 ![Dot product projection](./3d-math-primer-note-assets/dot_product_project.png)
 
 ## **2.12** - Vector Cross Product
@@ -219,9 +219,93 @@ the maginutude must be computed
 - No need to memorize these
 ![Linear algebra identities](./3d-math-primer-note-assets/linear_algebra_identities.png)
 
+# [**Chapter 3:** Multiple Coordinate Spaces](https://gamemath.com/book/multiplespaces.html)
+## **3.1** - Why Bother with Multiple Coordinate Spaces?
+- Having one universal coordinate space for everything in, well, the universe is a terrible idea
+    - Many coordinate spaces are relative to something nearby, not something on the other side of the planet, thus creating
+    the preference for a custom coordinate space
+- *Transformational relativism*: the contention that no place or orientation of coordinate system can be considered superior to others
 
-<!-- # [**Chapter 3:** Multiple Coordinate Spaces](https://gamemath.com/book/multiplespaces.html) -->
-<!-- # [**Chapter 4:** Introduction to Matrices](https://gamemath.com/book/matrixintro.html) -->
+## **3.2** - Some Useful Coordinate Spaces
+- *World coordinate system*: the coordinate space for the planet, with the origin being at the intersection of the equator and the longitude
+for Greenwich, England
+    - Operates on longitudes and latitudes
+    - Uses spherical coordinates instead of Cartesian coordinates
+    - Is an *absolute* coordinate space (because its the biggest one we care about)
+- *Object space*: the coordinate space associated with a particular object (such as yourself, or a box)
+- *Camera space*: the coordinate space associated with the viewpoint used for rendering
+    - The camera is considered to be at (0,0)
+    - Camera space is 3D while screen space is 2D
+    - Mapping camera space => screen space involves *projection*
+![Camera space](./3d-math-primer-note-assets/camera_space.png)
+- *Upright space*: associated with an object and halfway between *world space* and *object space* in that the axis are parallel to the world space but the origin is the same as the object's origin
+![Upright space example](./3d-math-primer-note-assets/object_inertial_world_spaces.png)
+
+## **3.3** - Basis Vectors and Coordinate Space Transformations
+- *Basis vectors*: pretty much the x,y or x,y,z axes of a coordinate plane (they dont necessarily need to be perpendicular)
+- Different questions require different coordinate spaces
+  - Example: To determine if a sandwich is *north*, use **world space**; to decide how to grab it (turning left/right), use the **robot’s object space**.
+  - Sensors and motor controls rely on object space; rendering and lighting may require world space.
+- Coordinate space transformations solve the problem of mismatched frames of reference 
+  - You often need to convert data (positions, directions) between spaces like world, object, and camera space.
+  - These transformations are mathematical, not physical; objects don’t move, their **representation** changes.
+- Two perspectives on transformations: Active vs. Passive
+  - **Active**: The *object* moves within a fixed coordinate space.
+  - **Passive**: The *coordinate system* moves around a fixed object.
+  - Both yield the same result but differ in mental framing
+- Model transformations follow a sequence: Rotate, then Translate
+  - Rotating around the origin is simpler (a **linear transform**) than rotating around another point (an **affine transform**).
+  - Translating first requires extra steps to simulate rotation about the origin anyway, so **rotate-first is preferred**.
+- Camera transformations invert the logic: Translate then Rotate the world
+  - To move from **world space** to **camera space**, imagine moving the *entire world* so the **camera is at the origin**.
+  - This shift allows relative positions to be calculated without physically moving the camera or objects.
+
+## **3.4** - Nested Coordinate Spaces
+- It becomes easier to animate little things with nested coordinate spaces
+- Take a sheep for instance:
+    - The origin of a sheep object as a whole is know in the *world space*
+    - The sheep's head can have it's own coordinate space
+    - The movement/animation of the sheep's ear can be in relation to the sheep's *head space*
+        - The sheep's *head space* is know in relation to the sheep's *body space*, which in turn is known in the *world space*
+- This creates a hierarchy of coordinate spaces, with the *world space* as the root
+
+# [**Chapter 4:** Introduction to Matrices](https://gamemath.com/book/matrixintro.html)
+## **4.1** - Mathematical Definition of Matrix
+- An *m x n* matrix has *m rows* and *n columns*
+- A square matrix has the same number of rows and columns
+    - The *diagonal elements* go from top-left corner to bottom-right
+    - *Diagonal matrix*: all nondiagonal elements are 0
+    - *Identity matrix*: a diagonal matrix with all 1's on the diagonal
+- *Matrix transposition*: 
+    - Given an *r x c* matrix **M**, the *transpose* (denoted **M**^T) is the *c x r* matrix such that the values are flipped along the 
+    main diagonal as such:
+![Transposition example](./3d-math-primer-note-assets/transposition.png)
+- *Multiplying a matrix by a scalar*:
+    - Simply distribute the scalar into each element of the matrix via multiplication
+- *Multiplying two matrices*:
+    - Considering two matrices *r x n* and *n x c*, the result would be an *r x c* matrix
+    - **NOTE**: the number of columns in the first matrix must be equal to the number of rows in the second.
+![Matrix multiplication](./3d-math-primer-note-assets/matrix_multiplication.png)
+
+## **4.2** - Geometric Interpretation of Matrix
+- A square matrix can describe any *linear transformation* such as
+    - rotation
+    - scale
+    - orthographic projection
+    - reflection
+    - shearing
+- Example of visualizing the transformation that a matrix applies to any given vector
+    - Consider the following matrix:
+    ![Matrix transform example](./3d-math-primer-note-assets/matrix-transform-example.png)
+    - We first extract the basis vectors **p** and **q** from the rows:
+        - **p** = [2  1]
+        - **q** = [-1  2]
+    - Then you place them at the origin. Below on the left represents an untouched vector (or asset) and on the right
+    is the result of the transform of this particular matrix (rotates and scales it)
+    ![Result from transforming](./3d-math-primer-note-assets/matrix-result.png)
+- The rows of a square matrix can be considered the basis vectors of a coordinate space
+- Multiply the vector by the matrix to transform the vector to the new coordinate space
+
 <!-- # [**Chapter 5:** Matrices and Linear Transformations](https://gamemath.com/book/matrixtransforms.html) -->
 <!-- # [**Chapter 6:** More on Matrices](https://gamemath.com/book/matrixmore.html) -->
 <!-- # [**Chapter 7:** Polar Coordinate Systems](https://gamemath.com/book/polarspace.html) -->
